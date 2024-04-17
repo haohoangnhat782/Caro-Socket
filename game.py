@@ -31,7 +31,7 @@ class Game:
         self.line_1 = 3
         self.namep1 = ""
         self.namep2 = ""
-
+        self.winning_cells= []
 
     def get_player_move(self, p):
         """
@@ -138,7 +138,45 @@ class Game:
         self.winner_part = self.winner
         return  self.winner_part
 
+    def find_winning_cells(self):
+        winning_cells = []
 
+        # Kiểm tra hàng và cột
+        for row_index, row in enumerate(self.markers):
+            for col_index in range(len(row) - 4):
+                if sum(row[col_index:col_index + 5]) == 5:
+                    # Nếu hàng chiến thắng
+                    winning_cells.extend([(row_index, col_index + i) for i in range(5)])
+                elif sum(row[col_index:col_index + 5]) == -5:
+                    winning_cells.extend([(row_index, col_index + i) for i in range(5)])
+
+        for col_index in range(len(self.markers[0])):
+            for row_index in range(len(self.markers) - 4):
+                if sum(self.markers[row][col_index] for row in range(row_index, row_index + 5)) == 5:
+                    # Nếu cột chiến thắng
+                    winning_cells.extend([(row_index + i, col_index) for i in range(5)])
+                elif sum(self.markers[row][col_index] for row in range(row_index, row_index + 5)) == -5:
+                    winning_cells.extend([(row_index + i, col_index) for i in range(5)])
+
+        # Kiểm tra đường chéo chính
+        for row_index in range(len(self.markers) - 4):
+            for col_index in range(len(self.markers) - 4):
+                if sum(self.markers[row_index + i][col_index + i] for i in range(5)) == 5:
+                    # Nếu đường chéo chính chiến thắng
+                    winning_cells.extend([(row_index + i, col_index + i) for i in range(5)])
+                elif sum(self.markers[row_index + i][col_index + i] for i in range(5)) == -5:
+                    winning_cells.extend([(row_index + i, col_index + i) for i in range(5)])
+
+        # Kiểm tra đường chéo phụ
+        for row_index in range(len(self.markers) - 4):
+            for col_index in range(4, len(self.markers)):
+                if sum(self.markers[row_index + i][col_index - i] for i in range(5)) == 5:
+                    # Nếu đường chéo phụ chiến thắng
+                    winning_cells.extend([(row_index + i, col_index - i) for i in range(5)])
+                elif sum(self.markers[row_index + i][col_index - i] for i in range(5)) == -5:
+                    winning_cells.extend([(row_index + i, col_index - i) for i in range(5)])
+
+        return winning_cells
 
     def resetWent(self):
         self.p1Went = False

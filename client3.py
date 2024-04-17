@@ -40,13 +40,16 @@ class Chat:
 
 chat_box = Chat("")
 Name = Chat("")
-def draw_grid(screen):
+def draw_grid(screen,game):
         bg = (255, 255, 255)
         grid = (128, 128, 128)
         screen.fill(bg)
         for x in range(1, 10):
             pygame.draw.line(screen, grid, (0, x * 60), (WIDTH, x * 60), line_1)
             pygame.draw.line(screen, grid, (x * 60, 0,), (x * 60, HEIGHT), line_1)
+        for cell in game.find_winning_cells():
+            x, y = cell
+            pygame.draw.rect(screen, blue, (x * 60, y * 60, 60, 60), 3)
 
         pygame.draw.line(screen, (128,128,128), (600, 0), (600, 600), 2)
         pygame.draw.line(screen, (128,128,128), (0, 600), (800, 600), 2)
@@ -62,7 +65,7 @@ def redrawWindow(win, game, p,WIDTH,HEIGHT):
         text = font_pl.render("Waiting Other Player...", True, (255,255,255))
         win.blit(text, (320,380))
     else:
-        draw_grid(win)
+        draw_grid(win,game)
         font = pygame.font.SysFont("comicsans", 60)
         font1 = pygame.font.SysFont("comicsans", 35)
 
