@@ -48,8 +48,9 @@ First you need to change the Wireless LAN:
 * Step 4 - how to run 2 client.py:
   - Click client.py
   - Click Edit Configurations
+  - Click Allow
   <p align="center"> <img src="img/run.png"/> </p>
-  - Click Edit Configurations
+  
     <p align="center"> <img src="img/run2.png"/>
   </p>
 * Step 5 - Run server.py and two times client.py
