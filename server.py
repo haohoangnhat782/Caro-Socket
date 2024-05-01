@@ -3,7 +3,7 @@ from _thread import *
 import pickle
 from game import Game
 
-server = "192.168.1.5"
+server = "192.168.1.2"
 port = 5552
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -40,11 +40,9 @@ def threaded_client(conn, p, gameId):
                         game.resetWent()
                     elif data != "get":
                         if data.startswith("chat|"):
-                            # Trích xuất tin nhắn chat
                             chat_message = data.split("|")[1].strip()
                             game.chat(chat_message)
                         elif data.startswith("name|"):
-                            # Trích xuất tin nhắn chat
                             player_name = data.split("|")[1].strip()
                             game.name(p, player_name)
 
